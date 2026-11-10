@@ -22,7 +22,7 @@ import type {
 } from '@prisma/orm-mongo/contract/types';
 
 export type StorageHash =
-  StorageHashBase<'bdf84c83adcc796638599553a64e4fc95ddda80ce50f4cc0d34c348404705ac3'>;
+  StorageHashBase<'a1bdae360a7aaa136cffeb07c18dfe06048bf38d17a63322aa14d27210b40c84'>;
 export type ExecutionHash = ExecutionHashBase<string>;
 export type ProfileHash =
   ProfileHashBase<'251b3ce23f6c9f561892e7c1af9d2cc941a13d64ba1aa7226b90036b09568cc3'>;
@@ -58,6 +58,12 @@ export namespace Models {
     author: unbound_User;
     readonly [RelationKeys]?: 'author';
   };
+  export type unbound_Service = {
+    description: FieldOutputTypes['__unbound__']['Service']['description'];
+    id: FieldOutputTypes['__unbound__']['Service']['id'];
+    name: FieldOutputTypes['__unbound__']['Service']['name'];
+    readonly [RelationKeys]?: never;
+  };
   export type unbound_User = {
     email: FieldOutputTypes['__unbound__']['User']['email'];
     id: FieldOutputTypes['__unbound__']['User']['id'];
@@ -71,6 +77,7 @@ export namespace Models {
 export declare const models: {
   __unbound__: {
     Post: Models.unbound_Post;
+    Service: Models.unbound_Service;
     User: Models.unbound_User;
   };
 };
@@ -98,6 +105,24 @@ type ContractBase = Omit<
                     readonly title: { readonly bsonType: 'string' };
                   };
                   readonly required: readonly ['_id', 'authorId', 'title'];
+                };
+                readonly kind: 'mongo-validator';
+                readonly validationAction: 'error';
+                readonly validationLevel: 'strict';
+              };
+            };
+            readonly services: {
+              readonly kind: 'mongo-collection';
+              readonly validator: {
+                readonly jsonSchema: {
+                  readonly additionalProperties: false;
+                  readonly bsonType: 'object';
+                  readonly properties: {
+                    readonly _id: { readonly bsonType: 'objectId' };
+                    readonly description: { readonly bsonType: 'string' };
+                    readonly name: { readonly bsonType: 'string' };
+                  };
+                  readonly required: readonly ['_id', 'description', 'name'];
                 };
                 readonly kind: 'mongo-validator';
                 readonly validationAction: 'error';
@@ -143,6 +168,10 @@ type ContractBase = Omit<
   readonly targetFamily: 'mongo';
   readonly roots: {
     readonly posts: { readonly namespace: '__unbound__' & NamespaceId; readonly model: 'Post' };
+    readonly services: {
+      readonly namespace: '__unbound__' & NamespaceId;
+      readonly model: 'Service';
+    };
     readonly users: { readonly namespace: '__unbound__' & NamespaceId; readonly model: 'User' };
   };
   readonly domain: {
@@ -189,6 +218,31 @@ type ContractBase = Omit<
                 readonly content: { readonly field: 'content' };
                 readonly id: { readonly field: '_id' };
                 readonly title: { readonly field: 'title' };
+              };
+            };
+          };
+          readonly Service: {
+            readonly fields: {
+              readonly description: {
+                readonly nullable: false;
+                readonly type: { readonly kind: 'scalar'; readonly codecId: 'mongo/string@1' };
+              };
+              readonly id: {
+                readonly nullable: false;
+                readonly type: { readonly kind: 'scalar'; readonly codecId: 'mongo/objectId@1' };
+              };
+              readonly name: {
+                readonly nullable: false;
+                readonly type: { readonly kind: 'scalar'; readonly codecId: 'mongo/string@1' };
+              };
+            };
+            readonly relations: Record<string, never>;
+            readonly storage: {
+              readonly collection: 'services';
+              readonly fields: {
+                readonly description: { readonly field: 'description' };
+                readonly id: { readonly field: '_id' };
+                readonly name: { readonly field: 'name' };
               };
             };
           };

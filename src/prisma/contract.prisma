@@ -17,3 +17,10 @@ model Post {
   authorId ObjectId
   @@map("posts")
 }
+
+model Service {
+  id       ObjectId @id @map("_id")
+  name     String
+  description String
+  @@map("services")
+}

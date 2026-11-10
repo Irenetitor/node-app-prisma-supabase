@@ -8,6 +8,10 @@
       "model": "Post",
       "namespace": "__unbound__"
     },
+    "services": {
+      "model": "Service",
+      "namespace": "__unbound__"
+    },
     "users": {
       "model": "User",
       "namespace": "__unbound__"
@@ -80,6 +84,46 @@
                 },
                 "title": {
                   "field": "title"
+                }
+              }
+            }
+          },
+          "Service": {
+            "fields": {
+              "description": {
+                "nullable": false,
+                "type": {
+                  "codecId": "mongo/string@1",
+                  "kind": "scalar"
+                }
+              },
+              "id": {
+                "nullable": false,
+                "type": {
+                  "codecId": "mongo/objectId@1",
+                  "kind": "scalar"
+                }
+              },
+              "name": {
+                "nullable": false,
+                "type": {
+                  "codecId": "mongo/string@1",
+                  "kind": "scalar"
+                }
+              }
+            },
+            "relations": {},
+            "storage": {
+              "collection": "services",
+              "fields": {
+                "description": {
+                  "field": "description"
+                },
+                "id": {
+                  "field": "_id"
+                },
+                "name": {
+                  "field": "name"
                 }
               }
             }
@@ -193,6 +237,34 @@
                 "validationLevel": "strict"
               }
             },
+            "services": {
+              "kind": "mongo-collection",
+              "validator": {
+                "jsonSchema": {
+                  "additionalProperties": false,
+                  "bsonType": "object",
+                  "properties": {
+                    "_id": {
+                      "bsonType": "objectId"
+                    },
+                    "description": {
+                      "bsonType": "string"
+                    },
+                    "name": {
+                      "bsonType": "string"
+                    }
+                  },
+                  "required": [
+                    "_id",
+                    "description",
+                    "name"
+                  ]
+                },
+                "kind": "mongo-validator",
+                "validationAction": "error",
+                "validationLevel": "strict"
+              }
+            },
             "users": {
               "indexes": [
                 {
@@ -248,7 +320,7 @@
         "kind": "mongo-database"
       }
     },
-    "storageHash": "bdf84c83adcc796638599553a64e4fc95ddda80ce50f4cc0d34c348404705ac3"
+    "storageHash": "a1bdae360a7aaa136cffeb07c18dfe06048bf38d17a63322aa14d27210b40c84"
   },
   "capabilities": {},
   "extensions": {},
